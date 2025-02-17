@@ -7,8 +7,6 @@ import { CiDark, CiLight } from 'react-icons/ci';
 
 const Navber = () => {
 
-  // TODO 1: dynamic theme light and dark mode
-
   const { user, signOutUser } = useAuth();
   const { theme, toggleTheme } = useTheme();
 
@@ -35,7 +33,7 @@ const Navber = () => {
   </>
 
   return (
-    <div className="navbar fixed bg-black bg-opacity-45 px-3 md:px-10 z-10">
+    <div className="navbar fixed bg-black bg-opacity-35 px-3 md:px-10 z-10">
       <div className="navbar-start">
         <div className="dropdown text-white ">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">

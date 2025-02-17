@@ -51,57 +51,49 @@ const TestimonialSlider = () => {
   };
 
   return (
-    <div className="px-4 flex flex-col items-center">
-      <h2 className="text-3xl font-bold text-gray-800 mb-8">
-        What Our Customers Say
-      </h2>
-      <AnimatePresence mode="wait">
-        <motion.div 
-          key={currentIndex}
-          initial={{ opacity: 0, x: 20 }}
-          animate={{ opacity: 1, x: 0 }}
-          exit={{ opacity: 0, x: -20 }}
-          transition={{ duration: 0.5 }} 
-          className="relative w-full max-w-2xl bg-yellow-50 p-6 rounded-lg shadow-md text-center"
-        >
-          <div>
-            <p className="text-gray-700 mb-4">{testimonials[currentIndex].review}</p>
-            <div className="flex justify-center mb-2">
-              {[...Array(5)].map((_, i) => (
-                <Star
-                  key={i}
-                  className={`w-5 h-5 ${
-                    i < testimonials[currentIndex].rating
-                      ? "text-yellow-400"
-                      : "text-gray-300"
-                  }`}
-                />
-              ))}
-            </div>
-            <div className="flex flex-col items-center">
-              <img
-                src={testimonials[currentIndex].image}
-                alt={testimonials[currentIndex].name}
-                className="w-16 h-16 rounded-full mb-2"
-              />
-              <h3 className="font-bold">{testimonials[currentIndex].name}</h3>
-              <p className="text-gray-500">{testimonials[currentIndex].role}</p>
-            </div>
-          </div>
-        </motion.div>
-      </AnimatePresence>
-      <div className="flex justify-center gap-6 mt-6">
-        <button
-          onClick={prevTestimonial}
-          className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
-        >
-          <ArrowLeft className="w-6 h-6 text-gray-700" />
+    <div className="flex flex-col items-center">
+      <h2 className="text-3xl font-bold text-gray-800 py-10"> What Our Customers Say </h2>
+      <div className="flex items-center justify-center gap-6">
+        <button onClick={prevTestimonial} className="p-2 h-fit border  border-yellow-700 rounded-full hover:bg-yellow-800">
+          <ArrowLeft className="w-6 h-6 text-yellow-700 hover:text-white" />
         </button>
-        <button
-          onClick={nextTestimonial}
-          className="p-2 bg-gray-300 rounded-full hover:bg-gray-400"
-        >
-          <ArrowRight className="w-6 h-6 text-gray-700" />
+        <AnimatePresence mode="wait">
+          <motion.div 
+            key={currentIndex}
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            transition={{ duration: 0.5 }} 
+            className="relative w-full max-w-2xl bg-yellow-50 p-6 rounded-lg shadow-md text-center"
+          >
+            <div>
+              <p className="text-gray-700 mb-4">{testimonials[currentIndex].review}</p>
+              <div className="flex justify-center mb-2">
+                {[...Array(5)].map((_, i) => (
+                  <Star
+                    key={i}
+                    className={`w-5 h-5 ${
+                      i < testimonials[currentIndex].rating
+                        ? "text-yellow-400"
+                        : "text-gray-300"
+                    }`}
+                  />
+                ))}
+              </div>
+              <div className="flex flex-col items-center">
+                <img
+                  src={testimonials[currentIndex].image}
+                  alt={testimonials[currentIndex].name}
+                  className="w-16 h-16 rounded-full mb-2"
+                />
+                <h3 className="font-bold">{testimonials[currentIndex].name}</h3>
+                <p className="text-gray-500">{testimonials[currentIndex].role}</p>
+              </div>
+            </div>
+          </motion.div>
+        </AnimatePresence>
+        <button onClick={nextTestimonial} className="p-2 h-fit border  border-yellow-700 rounded-full hover:bg-yellow-800">
+          <ArrowRight className="w-6 h-6 text-yellow-700 hover:text-white" />
         </button>
       </div>
     </div>
