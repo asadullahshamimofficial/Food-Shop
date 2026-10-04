@@ -1,12 +1,10 @@
-import React from 'react';
-
 const Footer = () => {
   return (
     <div className=''>
       <footer className="footer bg-yellow-700 text-white border-base-300 border-t px-10 py-2">
         <aside className="grid-flow-col items-center">
           <img className='w-16' src="https://i.ibb.co.com/RBSY3Qn/food-drink-logo-white-background-1277164-19895-removebg-preview.png" alt="" />
-          <p> <b> AUS Industries Ltd. </b> <br /> Providing reliable tech since 2025 </p>
+          <p> <b> AUS Industries Ltd. </b> <br /> Providing reliable tech since {new Date().getFullYear()} </p>
         </aside>
         <nav className="md:place-self-center md:justify-self-end">
           <div className="grid grid-flow-col gap-4">

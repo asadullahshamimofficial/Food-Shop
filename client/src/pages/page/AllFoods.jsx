@@ -67,7 +67,6 @@ const AllFoods = () => {
         <h1 className="text-3xl font-bold"> All Foods </h1>
         <div className="flex gap-5 items-center">
           <div className="">
-            {/* <span className="pr-2"> Search food: </span> */}
             <input
               type="text"
               placeholder="Search for foods..."
@@ -77,7 +76,6 @@ const AllFoods = () => {
             />
           </div>
           <div>
-            {/* <span className="pr-2">Sort by price:</span> */}
             <select
               value={sortOrder}
               onChange={(e) => handleSortChange(e.target.value)}
@@ -122,7 +120,7 @@ const AllFoods = () => {
       </div>
 
       {/* Pagination */}
-      <div className="flex flex-wrap justify-center mt-6 gap-2 px-10">
+      <div className="flex flex-wrap justify-center my-6 gap-2 px-10">
         <button
           className="btn rounded-full bg-yellow-700 hover:bg-yellow-800 text-white"
           onClick={() => handlePageChange(currentPage - 1)}

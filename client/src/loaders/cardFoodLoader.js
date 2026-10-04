@@ -9,11 +9,10 @@ const cardFoodLoader = async () => {
   
   const loadedFoods = await fetch(`${import.meta.env.VITE_Server_Host_Link}/productByIds`, {
     method: 'POST',
-    headers: {
-      'content-type': 'application/json'
-    },
+    headers: {'content-type': 'application/json'},
     body: JSON.stringify()
   });
+  
   const foods = await loadedFoods.json();
 
   const savedCart = [];
