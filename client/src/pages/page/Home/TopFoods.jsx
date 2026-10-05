@@ -1,17 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import Marquee from "react-fast-marquee";
 // import { Button } from "@/components/ui/button";
 // import { Card, CardContent } from "@/components/ui/card";
 // import { ShoppingCart, Pizza, Sandwich, Coffee, Star } from "lucide-react";
 
 const TopFoods = () => {
+  const navigate = useNavigate();
   const [foods, setFoods] = useState([]);
 
   useEffect(() => {
     fetch(`${import.meta.env.VITE_Server_Host_Link}/foods`)
       .then(res => res.json())
-      .then(data => setFoods(data.slice(0, 8)));
+      .then(data => setFoods(Array.isArray(data) ? data.slice(0, 8) : []));
   }, []);
 
   return (
@@ -23,7 +24,7 @@ const TopFoods = () => {
         <div className="flex gap-5">
           {foods.map((food, idx) => (
             <div key={idx} className="relative group w-72 h-64">
-              <Link to={`/singaleFood/${food._id}`} className=''>
+              <Link to={`/singleFood/${food._id}`} className=''>
                 <figure className="w-72 h-64">
                   <img className='rounded-3xl w-full h-full object-cover' src={food.image} alt={food.name} />
                 </figure>
@@ -31,7 +32,13 @@ const TopFoods = () => {
                   <h2 className="text-center text-2xl font-semibold"> {food.name} </h2>
                   <p className="text-center px-10"> {food.description} </p>
                   <div className="card-actions justify-center">
-                    <Link to={`/singaleFood/${food._id}`} className="btn bg-yellow-700 hover:bg-yellow-600 text-white border-none"> Details </Link>
+                    <button 
+                    onClick={(e) => { 
+                      e.preventDefault(); 
+                      e.stopPropagation(); 
+                      navigate(`/singleFood/${food._id}`); 
+                    }} 
+                    className="btn bg-yellow-700 hover:bg-yellow-600 text-white border-none"> Details </button>
                   </div>
                 </div>
               </Link>

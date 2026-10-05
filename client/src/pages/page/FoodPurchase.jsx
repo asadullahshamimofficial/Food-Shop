@@ -36,7 +36,9 @@ const FoodPurchase = () => {
   }, [id]);
 
   const handlePurchase = async () => {
-    if (user.email === food.owner_email) {
+    if (!user || !food) return;
+
+    if (user?.email === food?.owner_email) {
       toast.error("You cannot purchase your own food item!");
       return;
     }
@@ -56,16 +58,22 @@ const FoodPurchase = () => {
       const response = await fetch(`${import.meta.env.VITE_Server_Host_Link}/purchase`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(purchaseData),
       });
 
       if (response.ok) {
-        const res = await fetch(`${import.meta.env.VITE_Server_Host_Link}/foods/${id}`, {
-          method: "PATCH",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ availableQuantity: food.quantity - quantity }),
-        });
-        console.log(res)
+        const updateResponse = await fetch(`${import.meta.env.VITE_Server_Host_Link}/foods/${id}`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ quantity: food.quantity - quantity }),
+          }
+        );
+
+        if (!updateResponse.ok) {
+          toast.error("Purchase completed, but stock update failed.");
+          return;
+        }
         toast.success("Purchase successful!");
         navigate("/myOrder");
       } else {

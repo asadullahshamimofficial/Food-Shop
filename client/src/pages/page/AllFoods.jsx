@@ -19,9 +19,9 @@ const AllFoods = () => {
         : `${import.meta.env.VITE_Server_Host_Link}/foods`;
       try {
         const response = await fetch(endpoint);
-        console.log(response)
         const data = await response.json();
-        setFoods(data);
+        // Guard: ensure data is an array before setting state
+        setFoods(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching foods:", error);
       } finally {
@@ -109,7 +109,7 @@ const AllFoods = () => {
                 <p> {food.description} </p>
                 <div className="flex items-center justify-between">
                   <p className="text-start text-gray-600"><span className='font-bold'> Price: </span> ${food.price}</p>
-                  <Link to={`/singaleFood/${food._id}`} className="btn bg-yellow-700 hover:bg-yellow-800 text-white"> Details </Link>
+                  <Link to={`/singleFood/${food._id}`} className="btn bg-yellow-700 hover:bg-yellow-800 text-white"> Details </Link>
                 </div>
               </div>
             </div>

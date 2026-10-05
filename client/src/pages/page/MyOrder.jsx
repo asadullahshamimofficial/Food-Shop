@@ -4,22 +4,24 @@ import moment from "moment";
 import useAuth from "../../hooks/useAuth";
 
 const MyOrders = () => {
-  const { user } = useAuth(); // Get logged-in user's info
+  const { user } = useAuth();
   const [orders, setOrders] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  // Fetch orders for the logged-in user
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const response = await fetch(`${import.meta.env.VITE_Server_Host_Link}/orders?email=${user.email}`);
-        console.log(response)
+        const response = await fetch(
+          `${import.meta.env.VITE_Server_Host_Link}/orders?email=${user.email}`,
+          { credentials: "include" }
+        );
         const data = await response.json();
-        setOrders(data);
-        setLoading(false);
+        // Guard: ensure data is an array before setting state
+        setOrders(Array.isArray(data) ? data : []);
       } catch (error) {
         console.error("Error fetching orders:", error);
         toast.error("Failed to load orders.");
+      } finally {
         setLoading(false);
       }
     };
@@ -29,15 +31,15 @@ const MyOrders = () => {
     }
   }, [user?.email]);
 
-  // Handle order deletion
   const handleDelete = async (orderId) => {
     const confirmDelete = window.confirm("Are you sure you want to delete this order?");
     if (!confirmDelete) return;
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_Server_Host_Link}/orders/${orderId}`, {
-        method: "DELETE",
-      });
+      const response = await fetch(
+        `${import.meta.env.VITE_Server_Host_Link}/orders/${orderId}`,
+        { method: "DELETE", credentials: "include" }
+      );
 
       if (response.ok) {
         setOrders(orders.filter((order) => order._id !== orderId));
@@ -67,16 +69,13 @@ const MyOrders = () => {
     );
   }
 
-  console.log(orders)
-
   return (
-    <div className="container mx-auto h-dvh px-4 pt-20">
+    <div className="container mx-auto px-4 pt-20 mb-10 min-h-screen">
       <h1 className="text-3xl font-bold text-center my-6">My Orders</h1>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {orders?.map((order) => (
+        {orders.map((order) => (
           <div key={order._id} className="border rounded-lg shadow-lg p-4">
-            {/* Food Info */}
             <img
               src={order.foodImage}
               alt={order.foodName}
@@ -95,8 +94,6 @@ const MyOrders = () => {
               <span className="font-bold">Ordered On:</span>{" "}
               {moment(order.buyingDate).format("MMMM Do YYYY, h:mm:ss a")}
             </p>
-
-            {/* Delete Button */}
             <button
               onClick={() => handleDelete(order._id)}
               className="btn bg-red-600 hover:bg-red-700 text-white w-full mt-4"

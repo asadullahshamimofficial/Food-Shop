@@ -1,23 +1,21 @@
-import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const PrivateRoute = ({ children }) => {
-  const navigate = useNavigate();
+  const { user, loading } = useAuth();
+  const location = useLocation();
 
-  useEffect(() => {
-    const checkAuth = async () => {
-      const response = await fetch(`${import.meta.env.VITE_Server_Host_Link}/private-route`, {
-        method: "GET",
-        credentials: "include",
-      });
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-screen">
+        <span className="loading loading-ring loading-lg"></span>
+      </div>
+    );
+  }
 
-      if (response.status === 401) {
-        navigate("/login"); // Redirect to login if unauthorized
-      }
-    };
-
-    checkAuth();
-  }, [navigate]);
+  if (!user) {
+    return <Navigate to="/logIn" state={{ from: location }} replace />;
+  }
 
   return children;
 };

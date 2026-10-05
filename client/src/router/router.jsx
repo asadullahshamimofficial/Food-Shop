@@ -11,7 +11,7 @@ import MyOrder from "../pages/page/MyOrder";
 import Home from "../pages/page/Home/Home";
 import Error from "../pages/page/Error";
 import SingleFood from "../pages/page/SingleFood";
-import FoodPurchase from "../pages/page/FoodPurchase ";
+import FoodPurchase from "../pages/page/FoodPurchase";
 import PrivateRoute from "./PrivateRoute";
 
 // My Foods Page, Add Food Page, My Orders
@@ -30,51 +30,51 @@ const router = createBrowserRouter([
         element: <AllFoods />,
       },
       {
-        path: '/purchase/:id',
+        path: "/purchase/:id",
         element:
-        // <PrivateRoute> 
-          <FoodPurchase />
-        // </PrivateRoute>,
+          <PrivateRoute>
+            <FoodPurchase />
+          </PrivateRoute>,
       },
       {
         path: "/addFood",
-        element: 
-        // <PrivateRoute> 
-          <AddFood /> 
-        // </PrivateRoute>,
+        element:
+          <PrivateRoute>
+            <AddFood />
+          </PrivateRoute>,
       },
       {
         path: "/updateFood",
-        element: 
-        // <PrivateRoute> 
-          <UpdateFood /> 
-        // </PrivateRoute>,
+        element:
+          <PrivateRoute>
+            <UpdateFood />
+          </PrivateRoute>,
       },
       {
         path: "/myFood",
-        element: 
-        // <PrivateRoute> 
-          <MyFood /> 
-        // </PrivateRoute>,
+        element:
+          <PrivateRoute>
+            <MyFood />
+          </PrivateRoute>,
       },
       {
         path: "/myOrder",
-        element: 
-        // <PrivateRoute> 
-          <MyOrder />
-        // </PrivateRoute>,
+        element:
+          <PrivateRoute>
+            <MyOrder />
+          </PrivateRoute>,
       },
       {
-        path: "/singaleFood/:id",
+        path: "/singleFood/:id",
         element: <SingleFood />,
         loader: ({params}) => fetch(`${import.meta.env.VITE_Server_Host_Link}/foods/${params.id}`)
       },
       {
         path: "/gallery",
-        element: 
-        // <PrivateRoute> 
-          <Gallery /> 
-        // </PrivateRoute>,
+        element:
+          <PrivateRoute>
+            <Gallery />
+          </PrivateRoute>,
       },
       {
         path: "/logIn",
@@ -85,13 +85,13 @@ const router = createBrowserRouter([
         element: <Register />,
       },
       {
-        path: '*',
+        path: "*",
         element: <Error />
       },
     ]
   },
   {
-    path: '*',
+    path: "*",
     element: <Error />
   },
 ]);
